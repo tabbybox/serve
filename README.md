@@ -6,7 +6,12 @@ Like literally what is going on with these **3 whole seconds**?
 
 [Kooha-2024-01-17-00-26-32.webm](https://github.com/tabbybox/serve/assets/11581624/bf44d743-7b20-433f-bf9f-8744cb4f3342)
 
-## Install
+*Now this cured my ADHD for a bit* (it started too fast i don't even bother timing it)
+
+[Kooha-2024-01-17-00-32-39.webm](https://github.com/tabbybox/serve/assets/11581624/a441ba72-69da-47b1-9cc7-d2bb765d5daf)
+
+
+## Installation
 You don't. 
 1. Install go
 2. Clone the whole thing
