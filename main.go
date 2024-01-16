@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -19,6 +20,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(wd)
 	fs := http.FileServer(http.Dir(path.Join(wd, args[0])))
 	http.Handle("/", fs)
 	flag.Parse()
