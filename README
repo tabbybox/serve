@@ -1,0 +1,3 @@
+# ./serve -l 3000
+
+the one from vercel is way too slow to start and stop, and clearly i'm too impatient to wait for it

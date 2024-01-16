@@ -10,7 +10,7 @@ import (
 
 func main() {
 	args := os.Args[1:]
-	portPtr := flag.String("p", "3000", "listen port")
+	portPtr := flag.String("l", "3000", "listen port")
 	wd, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
