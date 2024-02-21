@@ -1,4 +1,4 @@
-# ./serve -l 3000
+# serve -l 3000
 
 the ["serve" from vercel](https://github.com/vercel/serve) is way too slow to start and stop, and clearly i'm too impatient to wait for it
 
