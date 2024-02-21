@@ -12,7 +12,11 @@ Like literally what is going on with these **3 whole seconds**?
 
 
 ## Installation
-You don't. 
+btw I use arch:
+`serve` is available on AUR
+https://aur.archlinux.org/packages/serve-bin
+
+You don't?
 1. Install go
 2. Clone the whole thing
 3. `go build .`
