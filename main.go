@@ -26,7 +26,7 @@ func main() {
 		Args:  cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if showVersion {
-				fmt.Println("0.1.1")
+				fmt.Println("0.2.0")
 				return
 			}
 			if len(args) == 0 || showHelp {
