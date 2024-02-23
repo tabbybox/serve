@@ -64,7 +64,7 @@ func main() {
 	rootCmd.Flags().BoolVarP(&showVersion, "version", "v", false, "Print the version number")
 	rootCmd.Flags().Uint16VarP(&port, "port", "p", 3000, "Port to listen on")
 	// rootCmd.Flags().StringArrayVarP(&listenUri, "url", "u", []string{}, "URI endpoint on which to listen, can input moar than one")
-	rootCmd.Flags().BoolVar(&noPortSwitching, "no-port-switching", false, "Print the version number")
+	rootCmd.Flags().BoolVar(&noPortSwitching, "no-port-switching", false, "[INOP] Don't switch port when selected port is already in use")
 	rootCmd.Flags().BoolVarP(&showHelp, "help", "h", false, "Print the help menu")
 
 	rootCmd.Execute()
