@@ -15,7 +15,7 @@ import (
 func main() {
 	showVersion := false
 	var port uint16 = 3000
-	var listenUri []string
+	// var listenUri []string
 	noPortSwitching := false
 	showHelp := false
 
@@ -52,8 +52,10 @@ func main() {
 			fmt.Println(abspath)
 			server := http.FileServer(http.Dir(abspath))
 			http.Handle("/", server)
-			log.Println(fmt.Sprintf("Listening on %d", port))
-			err := http.ListenAndServe("0.0.0.0:3700", nil)
+			log.Println(fmt.Sprintf("Listening on :%d", port))
+			finalUri := fmt.Sprintf(":%d", port)
+			// fmt.Println(finalUri)
+			err := http.ListenAndServe(finalUri, nil)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -61,7 +63,7 @@ func main() {
 	}
 	rootCmd.Flags().BoolVarP(&showVersion, "version", "v", false, "Print the version number")
 	rootCmd.Flags().Uint16VarP(&port, "port", "p", 3000, "Port to listen on")
-	rootCmd.Flags().StringArrayVarP(&listenUri, "url", "u", []string{}, "URI endpoint on which to listen, can input moar than one")
+	// rootCmd.Flags().StringArrayVarP(&listenUri, "url", "u", []string{}, "URI endpoint on which to listen, can input moar than one")
 	rootCmd.Flags().BoolVar(&noPortSwitching, "no-port-switching", false, "Print the version number")
 	rootCmd.Flags().BoolVarP(&showHelp, "help", "h", false, "Print the help menu")
 
