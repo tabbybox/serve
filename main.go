@@ -21,6 +21,8 @@ func main() {
 	// beQuiet := false
 	allowBrowse := false
 	enableCors := false
+	var sslCert string
+	var sslKey string
 
 	rootCmd := &cobra.Command{
 		Use:   "serve [folder_name]",
@@ -57,9 +59,10 @@ func main() {
 			finalUri := fmt.Sprintf(":%d", port)
 			log.Println(fmt.Sprintf("Listening on https://127.0.0.1%s", finalUri))
 
-			err := app.Listen(finalUri)
-			if err != nil {
-				log.Fatal(err)
+			if (sslCert != "") && (sslKey != "") {
+				log.Fatal(app.ListenTLS(finalUri, sslCert, sslKey))
+			} else {
+				log.Fatal(app.Listen(finalUri))
 			}
 		},
 	}
@@ -71,6 +74,8 @@ func main() {
 	// rootCmd.Flags().BoolVarP(&beQuiet, "quiet", "q", false, "Supress log messages")
 	rootCmd.Flags().BoolVarP(&allowBrowse, "allow-browse", "b", false, "Allow browsing of the directory")
 	rootCmd.Flags().BoolVarP(&enableCors, "enable-cors", "c", false, "Enable CORS, sets Access-Control-Allow-Origin to *")
+	rootCmd.Flags().StringVar(&sslCert, "ssl-cert", "", "Path to SSL certificate")
+	rootCmd.Flags().StringVar(&sslKey, "ssl-key", "", "Path to SSL key")
 
 	rootCmd.Execute()
 }
