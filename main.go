@@ -1,13 +1,8 @@
 package main
 
 import (
-	// "flag"
 	"fmt"
 	"log"
-	// "net/http"
-	// "os"
-	// "path"
-	// "path/filepath"
 
 	"github.com/spf13/cobra"
 	"github.com/gofiber/fiber/v2"
@@ -48,13 +43,11 @@ func main() {
 				DisableStartupMessage: true,
 			});
 
-			// app.Get("/", func(c *fiber.Ctx) error {
-			// 	return c.SendString("hello world")
-			// })
+
 			app.Static("/", args[0], fiber.Static{
 				Browse: allowBrowse,
 			})
-			// fmt.Println(args[0])
+
 			finalUri := fmt.Sprintf(":%d", port)
 			log.Println(fmt.Sprintf("Listening on https://127.0.0.1%s", finalUri))
 
@@ -62,29 +55,6 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			// inPath := args[0]
-			// abspath := ""
-			// if path.IsAbs(inPath) {
-			// 	fmt.Print("absolute path it is")
-			// 	abspath = inPath
-			// } else {
-			// 	wd, err := os.Getwd()
-			// 	if err != nil {
-			// 		log.Fatal(err)
-			// 	}
-			// 	abspath, err = filepath.Abs(path.Join(wd, args[0]))
-			// }
-
-			// fmt.Println(abspath)
-			// server := http.FileServer(http.Dir(abspath))
-			// http.Handle("/", server)
-			// log.Println(fmt.Sprintf("Listening on :%d", port))
-			// finalUri := fmt.Sprintf(":%d", port)
-			// // fmt.Println(finalUri)
-			// err := http.ListenAndServe(finalUri, nil)
-			// if err != nil {
-			// 	log.Fatal(err)
-			// }
 		},
 	}
 	rootCmd.Flags().BoolVarP(&showVersion, "version", "v", false, "Print the version number")
@@ -96,25 +66,4 @@ func main() {
 	rootCmd.Flags().BoolVarP(&allowBrowse, "allow-browse", "b", false, "Allow browsing of the directory")
 
 	rootCmd.Execute()
-
-	// args := os.Args[1:]
-
-	// if len(args) == 0 {
-	// 	log.Fatal("Please specify a directory to serve")
-	// }
-	// portPtr := flag.String("l", ":3000", "listen port")
-	// wd, err := os.Getwd()
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// fmt.Println(wd)
-	// fs := http.FileServer(http.Dir(path.Join(wd, args[0])))
-	// http.Handle("/", fs)
-	// flag.Parse()
-	// log.Print("Listening on " + *portPtr)
-
-	// err = http.ListenAndServe(*portPtr, nil)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
 }
