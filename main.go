@@ -4,20 +4,25 @@ import (
 	// "flag"
 	"fmt"
 	"log"
-	"net/http"
-	"os"
-	"path"
-	"path/filepath"
+	// "net/http"
+	// "os"
+	// "path"
+	// "path/filepath"
 
 	"github.com/spf13/cobra"
+	"github.com/gofiber/fiber/v2"
+	// fiberlog "github.com/gofiber/fiber/v2/log"
 )
 
 func main() {
 	showVersion := false
 	var port uint16 = 3000
 	// var listenUri []string
-	noPortSwitching := false
+	// noPortSwitching := false
 	showHelp := false
+	// beQuiet := false
+	allowBrowse := false
+
 
 	rootCmd := &cobra.Command{
 		Use:   "serve [folder_name]",
@@ -36,36 +41,57 @@ func main() {
 			}
 
 			// the serving stuff
-			inPath := args[0]
-			abspath := ""
-			if path.IsAbs(inPath) {
-				fmt.Print("absolute path it is")
-				abspath = inPath
-			} else {
-				wd, err := os.Getwd()
-				if err != nil {
-					log.Fatal(err)
-				}
-				abspath, err = filepath.Abs(path.Join(wd, args[0]))
-			}
+			app := fiber.New(fiber.Config{
+				AppName: "Serve",
+				DisableStartupMessage: true,
+			});
 
-			fmt.Println(abspath)
-			server := http.FileServer(http.Dir(abspath))
-			http.Handle("/", server)
-			log.Println(fmt.Sprintf("Listening on :%d", port))
+			// app.Get("/", func(c *fiber.Ctx) error {
+			// 	return c.SendString("hello world")
+			// })
+			app.Static("/", args[0], fiber.Static{
+				Browse: allowBrowse,
+			})
+			// fmt.Println(args[0])
 			finalUri := fmt.Sprintf(":%d", port)
-			// fmt.Println(finalUri)
-			err := http.ListenAndServe(finalUri, nil)
+			log.Println(fmt.Sprintf("Listening on https://127.0.0.1%s", finalUri))
+
+			err := app.Listen(finalUri)
 			if err != nil {
 				log.Fatal(err)
 			}
+			// inPath := args[0]
+			// abspath := ""
+			// if path.IsAbs(inPath) {
+			// 	fmt.Print("absolute path it is")
+			// 	abspath = inPath
+			// } else {
+			// 	wd, err := os.Getwd()
+			// 	if err != nil {
+			// 		log.Fatal(err)
+			// 	}
+			// 	abspath, err = filepath.Abs(path.Join(wd, args[0]))
+			// }
+
+			// fmt.Println(abspath)
+			// server := http.FileServer(http.Dir(abspath))
+			// http.Handle("/", server)
+			// log.Println(fmt.Sprintf("Listening on :%d", port))
+			// finalUri := fmt.Sprintf(":%d", port)
+			// // fmt.Println(finalUri)
+			// err := http.ListenAndServe(finalUri, nil)
+			// if err != nil {
+			// 	log.Fatal(err)
+			// }
 		},
 	}
 	rootCmd.Flags().BoolVarP(&showVersion, "version", "v", false, "Print the version number")
 	rootCmd.Flags().Uint16VarP(&port, "port", "p", 3000, "Port to listen on")
 	// rootCmd.Flags().StringArrayVarP(&listenUri, "url", "u", []string{}, "URI endpoint on which to listen, can input moar than one")
-	rootCmd.Flags().BoolVar(&noPortSwitching, "no-port-switching", false, "[INOP] Don't switch port when selected port is already in use")
+	// rootCmd.Flags().BoolVar(&noPortSwitching, "no-port-switching", false, "[INOP] Don't switch port when selected port is already in use")
 	rootCmd.Flags().BoolVarP(&showHelp, "help", "h", false, "Print the help menu")
+	// rootCmd.Flags().BoolVarP(&beQuiet, "quiet", "q", false, "Supress log messages")
+	rootCmd.Flags().BoolVarP(&allowBrowse, "allow-browse", "b", false, "Allow browsing of the directory")
 
 	rootCmd.Execute()
 
