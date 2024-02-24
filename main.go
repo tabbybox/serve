@@ -14,6 +14,8 @@ import (
 	// fiberlog "github.com/gofiber/fiber/v2/log"
 )
 
+var Version = "0.2.1"
+
 func main() {
 	showVersion := false
 	var port uint16 = 3000
@@ -28,10 +30,10 @@ func main() {
 		Use:   "serve [folder_name]",
 		Short: "Serve files from a directory as HTTP server",
 		Long:  "A simple HTTP server that serves files from a directory, fast, simple, without the weird npx/js quirks.",
-		Args:  cobra.MinimumNArgs(1),
+		// Args:  cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if showVersion {
-				fmt.Println("0.2.0")
+				fmt.Println(Version)
 				return
 			}
 			if len(args) == 0 || showHelp {
