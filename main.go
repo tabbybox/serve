@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/spf13/cobra"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/spf13/cobra"
 	// fiberlog "github.com/gofiber/fiber/v2/log"
 )
 
@@ -19,7 +20,7 @@ func main() {
 	showHelp := false
 	// beQuiet := false
 	allowBrowse := false
-
+	enableCors := false
 
 	rootCmd := &cobra.Command{
 		Use:   "serve [folder_name]",
@@ -39,10 +40,15 @@ func main() {
 
 			// the serving stuff
 			app := fiber.New(fiber.Config{
-				AppName: "Serve",
+				AppName:               "Serve",
 				DisableStartupMessage: true,
-			});
+			})
 
+			if enableCors {
+				app.Use(cors.New(cors.Config{
+					AllowOrigins: "*",
+				}))
+			}
 
 			app.Static("/", args[0], fiber.Static{
 				Browse: allowBrowse,
@@ -64,6 +70,7 @@ func main() {
 	rootCmd.Flags().BoolVarP(&showHelp, "help", "h", false, "Print the help menu")
 	// rootCmd.Flags().BoolVarP(&beQuiet, "quiet", "q", false, "Supress log messages")
 	rootCmd.Flags().BoolVarP(&allowBrowse, "allow-browse", "b", false, "Allow browsing of the directory")
+	rootCmd.Flags().BoolVarP(&enableCors, "enable-cors", "c", false, "Enable CORS, sets Access-Control-Allow-Origin to *")
 
 	rootCmd.Execute()
 }
