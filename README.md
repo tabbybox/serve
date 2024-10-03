@@ -1,5 +1,8 @@
 # serve -l 3000
 
+> [!NOTE]  
+> Seems like the issue is with NPM itself instead. That said, which you may find this useful, further development will likely to pause until I come back to exploration. Use at your own risk :P
+
 the ["serve" from vercel](https://github.com/vercel/serve) is way too slow to start and stop, and clearly i'm too impatient to wait for it
 
 Like literally what is going on with these **3 whole seconds**?
